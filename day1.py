@@ -74,11 +74,16 @@ i live at {city}
 description_format = description.format(full_name="John", city="Jakarta")
 
 # play with inputs
-first_number = input('Masukkan angka pertama: ')
-second_number = input('Masukkan angka kedua: ')
+# first_number = input('Masukkan angka pertama: ')
+# second_number = input('Masukkan angka kedua: ')
 
 # need to make sure the data type input
-print(int(first_number) + int(second_number))
+# print(int(first_number) + int(second_number))
 
+def say_hi(name):
+    return f"Hello {name}!" # pake f-string
 
+result = say_hi('Doni') 
+
+print(result) # Tidak ada yang dikembalikan klo pake print output functionnya
 
