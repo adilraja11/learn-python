@@ -83,6 +83,7 @@ description_format = description.format(full_name="John", city="Jakarta")
 def say_hi(name):
     return f"Hello {name}!" # pake f-string
 
+# agar bisa dimanfaatkan lagi
 result = say_hi('Doni') 
 
 print(result) # Tidak ada yang dikembalikan klo pake print output functionnya
