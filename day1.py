@@ -87,4 +87,3 @@ def say_hi(name):
 result = say_hi('Doni') 
 
 print(result) # Tidak ada yang dikembalikan klo pake print output functionnya
-
