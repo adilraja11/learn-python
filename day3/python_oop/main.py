@@ -1,24 +1,39 @@
-class BankAccount:
-    def __init__(self, username, balance = 0):
-        self.username = username
-        self.balance = balance
+import streamlit as st
+from libs import Library, Member
 
-    def deposit(self, amount):
-        self.balance += amount
-        print(f"{amount} deposited!")
+st.title("Library Management System")
 
-    def withdraw(self, amount):
-        self.balance -= amount
-        print(f"{amount} withdrawed!")
+if "library" not in st.session_state:
+    st.session_state.library = Library("My Library")
 
-    def check_balance(self):
-        print(f"Account: {self.username}, Balance: {self.balance}")
+page = st.sidebar.selectbox("Menu", ["Add Member", "Manage Membership", "View Members"])
 
-reza_account = BankAccount("Reza", 2000)
-jessy_account = BankAccount("Jessy", 800)
+if page == 'Add Member':
+    st.write("### Add Member")
+    name = st.text_input("Name: ")
+    button = st.button("Add Member")
 
-reza_account.withdraw(200)
-jessy_account.deposit(400)
+    if button:
+        new_member = Member(name)
+        st.session_state.library.register_member(new_member)
+        st.rerun()
 
-reza_account.check_balance()
-jessy_account.check_balance()
+elif page == "Manage Membership":
+    st.write("### Manage Membership")
+
+    for index, member in enumerate(st.session_state.library.members):
+        status = "Active" if member.is_active else "Deactive"
+        st.write(f"{member.name} - {status}")
+        deactivate_btn = st.button("Deactivate", key=f"deactivate_{index}")
+
+        if deactivate_btn:
+            member.deactivate()
+            st.rerun()
+
+elif page == "View Members":
+    if not st.session_state.library.members:
+        st.write('No Current Active Members')
+    else:
+        active_members = st.session_state.library.get_active_members()
+        for member in active_members:
+            st.write(member.name)
