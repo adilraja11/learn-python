@@ -1,0 +1,9 @@
+{% extends "base.html" %} {% block content %}
+<main>
+	<header class="flex justify-between items-center p-2 border-b">
+		<div>Dashboard</div>
+		<div>Log Out</div>
+	</header>
+	<div class="p-4">{% block dashboard %}{% endblock %}</div>
+</main>
+{% endblock %}

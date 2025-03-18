@@ -1,5 +1,10 @@
-{% extends "base.html" %}
+{% extends "dashboard-base.html" %} 
 
-{% block content  %}
- <h1>Hello!</h1>
-{% endblock  %}
+{% block dashboard %}
+<h1>Main Page Dashboard</h1>
+
+{% for hobby in hobbies %} 
+{% include "components/hobby-card.html" with hobby=hobby %} 
+{% endfor %}
+
+{% endblock %} 
