@@ -3,8 +3,15 @@
 {% block dashboard %}
 <h1>Main Page Dashboard</h1>
 
-{% for hobby in hobbies %} 
+{% comment %} {% for hobby in hobbies %} 
 {% include "components/hobby-card.html" with hobby=hobby %} 
-{% endfor %}
+{% endfor %} {% endcomment %}
 
+<div class="flex flex-wrap gap-2 my-2">
+  {% for note in notes %}
+    {% include "components/note-card.html" with note=note %}
+  {% endfor %}
+</div>
+
+<div class="myClass">Test</div>
 {% endblock %} 
