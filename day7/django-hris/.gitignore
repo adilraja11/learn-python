@@ -1,0 +1,8 @@
+# File .gitignore
+
+# Misal di sini sudah ada beberapa entri gitignore lainnya
+*.log
+*.env
+
+# Tambahkan baris berikut untuk mengabaikan folder node_modules
+node_modules/
