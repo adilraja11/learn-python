@@ -136,6 +136,9 @@ ENV/
 env.bak/
 venv.bak/
 
+# Tambahkan baris berikut untuk mengabaikan folder node_modules
+node_modules/
+
 # Spyder project settings
 .spyderproject
 .spyproject
