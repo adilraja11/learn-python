@@ -8,8 +8,8 @@ class BaseModel(models.Model):
         primary_key=True, max_length=100, default=generate_id, editable=False
     )
 
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         abstract = True

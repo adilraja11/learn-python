@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="bg-amber-200">Employees - {{ title }}</h1>
+<div>
+  {% for profile in profiles %}
+    <div>{{ profile.user.username }}</div>
+    <a href="{% url 'employee-detail' profile.id %}">
+      <button class="btn btn-error">View</button>
+    </a>
+  {% endfor %}
+
+  {% if is_paginated %}
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}">
+        <button class="btn btn-secondary">Previous</button>
+      </a>
+    {% endif %}
+    
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">
+        <button class="btn btn-primary">Next</button>
+      </a>
+    {% endif %}
+  {% endif %}
+
+
+</div>
+{% endblock %}
