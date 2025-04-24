@@ -1,6 +1,8 @@
+import json
+
 from pm import PromptManager
 from pydantic import BaseModel, Field
-from datetime import date
+from datetime import datetime
 
 class AnalyzeEvent(BaseModel):
     is_event: bool = Field(
@@ -42,11 +44,12 @@ def analyze_event(query):
     return is_event, description, confidence_score
 
 def extract_event(query):
-    today = date.today()
+    today = datetime.today()
+    formatted_date = today.strftime("%Y-%m-%d")
     pm = PromptManager()
     pm.add_message(
         "system",
-        f"Extract event details based on user Query, as additional information today's date is {today}"
+        f"Extract event details based on user Query, as additional information today's date is {formatted_date}"
     )
     pm.add_message(
         "user",
@@ -54,14 +57,33 @@ def extract_event(query):
     )
 
     result = pm.generate_structured(EventDetail)
-    print(result)
+    return result
+
+def generate_confirmation(query):
+    pm = PromptManager()
+    pm.add_message(
+        "system",
+        """
+            Create a confirmation message to the user, and ask if it's confirmed.
+
+            EXAMPLE RESPONSE OUTPUT:
+            Hey, I will make an event for your with this details: follow with the event details.
+            Let me know if it's good!
+        """
+    )
+    pm.add_message(
+        "user",
+        query
+    )
+    return pm.generate()
 
 def run():
     input_query = input("Query: ")
     is_event, description, confidence_score = analyze_event(input_query)
     if is_event and confidence_score > 0.7:
-        print(f"Confidence Score: {confidence_score}")
-        extract_event(description)
+        event = extract_event(description)
+        result = generate_confirmation(json.dumps(event))
+        print(result)
     else:
         print("No, this is not an event.")
 
