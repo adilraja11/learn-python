@@ -59,6 +59,27 @@ def extract_event(query):
     result = pm.generate_structured(EventDetail)
     return result
 
+def get_current_event():
+    return """
+    Event List :
+
+    - name : Meeting with Product Team
+      date : 12 April 2025, 13.00 PM
+      duration : 2 hours
+
+    - name : Meeting with Investor
+      date : 14 April 2025, 10.00 AM
+      duration : 2 hours
+    """
+
+def aggregate_event(current_event:str, new_event:str):
+    pm = PromptManager()
+    pm.add_message("system", f"You have list of user's current events, and check if its already exist. Here is the event: {current_event}")
+    pm.add_message("user", new_event)
+
+    result = pm.generate()
+    return result
+
 def generate_confirmation(query):
     pm = PromptManager()
     pm.add_message(
@@ -81,9 +102,12 @@ def run():
     input_query = input("Query: ")
     is_event, description, confidence_score = analyze_event(input_query)
     if is_event and confidence_score > 0.7:
-        event = extract_event(description)
-        result = generate_confirmation(json.dumps(event))
-        print(result)
+        current_event = get_current_event()
+        new_event = json.dumps(extract_event(description))
+
+        agg_result = aggregate_event(current_event, new_event)
+        # result = generate_confirmation(json.dumps(event))
+        print(agg_result)
     else:
         print("No, this is not an event.")
 
